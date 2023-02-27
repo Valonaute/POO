@@ -41,8 +41,7 @@ class CompteBancaire
             $this->depot(abs($this->solde));
         } else {
             return "Le compte $nCompteBancaire a bien été fermé";
-        }
-    } 
+        }} 
     public function depot($depot){
         // On vérifire que c'est bien un nombre qui est tapé 
         // Le montant du dépot doit etre supérieur à 0
@@ -55,9 +54,7 @@ class CompteBancaire
             $this->solde += $depot ; 
             // $this représente l'objet qui appelle la methode (si paul > paul, si alice > alice )
             echo "Votre dépot de $depot a bien été effectué.";
-        }
-
-    } 
+        }} 
     public function retrait($retrait){
         if(!(is_int($retrait))){
             return "le retrait doit être un nombre";
@@ -72,9 +69,7 @@ class CompteBancaire
         } else {
             $this->solde -= $retrait ; 
             echo "Le retrait de $retrait a bien été effectué";
-        }
-    }
-}
+        }}}
 // L'instanciation est la création de l'objet 
 $comptedejean = new CompteBancaire();
 $comptedejean->nCompteBancaire = "A7652";
