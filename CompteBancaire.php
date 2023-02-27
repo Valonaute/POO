@@ -5,6 +5,8 @@ class CompteBancaire
 
     // Ajout des attributs ou des propriétés 
     // Un attribut permet de décrire la classe 
+    // Le visibilité publique permet d'acceder aux attributs et methodes dans la classe et à l'exétrieur de la class.
+
 
     public $nCompteBancaire;
 
@@ -58,6 +60,7 @@ class CompteBancaire
         } else {
             // Je fais mon dépot 
             $this->solde += $depot ; 
+            // $this représente l'objet qui appelle la methode (si paul > paul, si alice > alice )
             echo "Votre dépot de $depot a bien été effectué.";
         }
 
