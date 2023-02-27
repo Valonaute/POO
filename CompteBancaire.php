@@ -2,24 +2,18 @@
 // Pour créer une classe vous devez prendre le meme nom que le dossier 
 class CompteBancaire
 {
-
     // Ajout des attributs ou des propriétés 
     // Un attribut permet de décrire la classe 
     // Le visibilité publique permet d'acceder aux attributs et methodes dans la classe et à l'exétrieur de la class.
-
-
     public $nCompteBancaire;
-
     public $dateOuverture;
-
     public $typeCompte;
-
+    // Les attributs classiques sont lié à l'objets, ils sont différents pour chacun des objets 
     public $solde;
-
+    // L'attribut static est lié à aucun objet, il est directement mis sur la mère et donc généré sur les objets filles 
+    public static $decouvert = 250;
     // Ajout des méthodes / fonctions  : 
-
     // Les méthodes représentent ce que peut faire l'objet, les actions, ce sont des fonction 
-
     public function ouvrir($solde){
         // Sur le compte il faut un minimum de 100 € à l'ouverture
         if ($solde < 100){
@@ -30,7 +24,6 @@ class CompteBancaire
             $this->depot($solde);
             echo "Le compte a bien été ouvert. Le solde est de $solde";
         }}
-
     public function fermer($nCompteBancaire){
         // Pour fermer le compte le solde doit être à 0.
         // Si le solde est débiteur, faire un depot. 
@@ -72,36 +65,40 @@ class CompteBancaire
             return "Veuillez tape un nombre positif";
         } else  if ($retrait >$this->solde){
             return "Vous ne pouvez pas dépasser le montant du solde";
+            // self fait appelle à la classe dans la classe
+            // :: est l'opérateur de résolution de portée suivi de l'attribut statique
+        } else if ($retrait > (self::$decouvert + $this->solde)){
+            return "Vous ne pouvez pas retirer + que le solde et le découvert autorisé";
         } else {
             $this->solde -= $retrait ; 
             echo "Le retrait de $retrait a bien été effectué";
         }
     }
 }
-
 // L'instanciation est la création de l'objet 
 $comptedejean = new CompteBancaire();
-
 $comptedejean->nCompteBancaire = "A7652";
 $comptedejean->dateOuverture = "05/03/2000";
 $comptedejean->typeCompte = "Courant";
 $comptedejean->ouvrir(500); 
 
 $comptedepaul = new CompteBancaire();
-
 $comptedepaul->nCompteBancaire = "B2564";
 $comptedepaul->dateOuverture = "15/09/2020";
 $comptedepaul->typeCompte = "Courant";
 $comptedepaul->ouvrir(200); 
 
 $comptedealice = new CompteBancaire();
-
 $comptedealice->nCompteBancaire = "A5678";
 $comptedealice->dateOuverture = "07/12/2001";
 $comptedealice->typeCompte = "Courant";
 $comptedealice->ouvrir(300); 
 
-
-
-
+// "->" est pour un objet 
+// "::" est pour une class, un élément static
+// Self, Parent, Static utilisés pour accéder aux propriétés et aux méthodes depuis la classe 
+echo "<br>";
+echo "<br>";
+echo "<br>";
+echo CompteBancaire::$decouvert;
 ?>
