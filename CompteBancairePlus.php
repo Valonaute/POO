@@ -20,30 +20,22 @@ class CompteBancairePlus
 
     // Le getter sert à afficher la valeur d'un attribut privée
     public function getNcompteBancaire(){
-        return $this->_nCompteBancaire;
-    }
+        return $this->_nCompteBancaire;}
     // Le setter permet de modifier ou d'ajouter la valeur d'un attribut privée
     public function setncomptebancaire($value){
-        $this->_nCompteBancaire = $value;
-    }
+        $this->_nCompteBancaire = $value;}
     public function getDateOuverture(){
-        return $this->_dateOuverture;
-    }
+        return $this->_dateOuverture;}
     public function setDateOuverture($valeur){
-        $this->_dateOuverture = $valeur;
-    }
+        $this->_dateOuverture = $valeur;}
     public function getTypeDeCompte(){
-       return $this->_typeDecompte;
-    }
+       return $this->_typeDecompte;}
     public function setTypeDeCompte($valeur){
-        $this->_typeDecompte = $valeur;
-    }
+        $this->_typeDecompte = $valeur;}
     public function getSolde(){
-        return $this->_solde;
-    }
+        return $this->_solde;}
     public function setSolde($valeur){
-        $this->_solde = $valeur;
-    }
+        $this->_solde = $valeur;}
 }
 
 $comptedeValentin = new CompteBancairePlus("60269150753","01/01/2000","courant",650);
