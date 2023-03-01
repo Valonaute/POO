@@ -1,22 +1,23 @@
 <?php
 
 class car {
-        public $_team; 
+        public $_pilot;
         public $_model; 
         public $_color;  
-        public $_max_speed;
         public $_energy;
-        public $_cap;
+        public $_max_speed;
 
-        public function __construct($team,$model,$color,$max_speed, $energy,)
+        public function __construct($pilot,$model,$color, $energy,$max_speed)
         {
-            $this->setteam($team);
+            $this->setpilot($pilot);
             $this->setmodel($model);
             $this->setcolor($color);
-            $this->setmax_speed($max_speed);
             $this->setenergy($energy);
+            $this->setmax_speed($max_speed);
         }
         // --------------------- Setters ---------------------
+        public function setpilot($value){
+            $this->_pilot = $value;}
         public function setteam($value){
             $this->_team = $value;}
         public function setmodel($value){

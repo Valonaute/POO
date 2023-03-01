@@ -3,11 +3,13 @@ require "car.php";
 $pdo = new PDO ("mysql:host=localhost;dbname=rallye", 'root' ,'');
 
 // --------------- Liste des requetes MySQL -----------------
-/*
+
 // CREATE INSERT into database : 
 
-$pdo->prepare("INSERT INTO race (id_car, speed, cap, tyreshealth) VALUES (null, ?, ?, ?)")->execute($Rallye_Car_Valentin->_speed, $Rallye_Car_Valentin->_cap, $Rallye_Car_Valentin->_tyreshealth);
-
+$req = $pdo->prepare("INSERT INTO race (id_car, pilot, speed, cap, tyreshealth) VALUES (null,? , ?, ?, ?)");
+$req->setFetchMode(PDO::FETCH_ASSOC);
+$req->execute($Rallye_Car_Valentin->_pilot,$Rallye_Car_Valentin->_speed, $Rallye_Car_Valentin->_cap, $Rallye_Car_Valentin->_tyreshealth);
+/*
 // UPDATE from database : 
 
 $requete = $pdo->prepare("SELECT * FROM race WHERE id_car = ?");
@@ -31,21 +33,19 @@ $cars = $requete->fetchAll(PDO::FETCH_ASSOC);
 // ------------------ Début de la course, mise en place de la ligne de départ ----------------------
 class rallye_car extends car 
 {  
-public $_pilot;
 public $_speed = 0;
 public $_tyreshealth = 100;
 public $_cap = 0;
+
+// public function __construct( $speed, $tyreshealth, $cap)
+// {
+//     $this->setspeed($speed);
+//     $this->settyreshealth($tyreshealth);
+//     $this->setcap($cap);
+// }
 public function connection(){
     $pdo = new PDO ("mysql:host=localhost;dbname=rallye", 'root' ,'');
-    return $pdo ;
-}
-public function __construct($pilot, $speed, $tyreshealth, $cap)
-{
-    $this->setpilot($pilot);
-    $this->setspeed($speed);
-    $this->settyreshealth($tyreshealth);
-    $this->setcap($cap);
-}
+    return $pdo ;}
 // ------------------ Les setters -------------------------
 public function setspeed($value){
     $this->_speed = (int)$value;}
@@ -65,9 +65,9 @@ public function getcap(){
     return $this->_cap;}
 // --------------- Fin des getters ----------------
 public function start(){
-    $this->connection();
     $this->_speed = $this->_speed + 20;
-    $this->connection()->prepare("INSERT INTO race (id_car, speed, cap, tyreshealth) VALUES (null, ?, ?, ?)")->execute($this->_speed, $this->_cap, $this->_tyreshealth);
+    $pdo = $this->connection();
+    $req = $pdo->prepare("INSERT INTO race ('id_car', 'pilot', 'speed', 'cap', 'tyreshealth') VALUES (null, ?, ?, ?, ?) WHERE ")->execute([$this->_pilot, $this->_speed, $this->_cap, $this->_tyreshealth]);
     return $this->_speed;}
 
 public function accelerate($time){
@@ -110,26 +110,39 @@ public function turnLeft(){
     return "You had turn, your cap is now ".$this->_cap." and your tires health is ".$this->_tyreshealth;}
 
 }
-$Rallye_Car_Valentin = new rallye_car ("Valentin", 0, 100, 0);
-
+$Rallye_Car_Valentin = new rallye_car ("Valentin","Peugeot 3008", "Diamond in the sky", "Electric", 210);
+$Rallye_Car_Lauriane = new rallye_car ("Law-Law", "Citroen C4", "fire", "Hybrid", 190);
 // ------------------- début de la course ligne droite fond de 6 -----------
+echo "Here on the line we have : ";
+echo "<pre>";
+print_r($Rallye_Car_Lauriane);
+print_r($Rallye_Car_Valentin);
+echo "<pre>";
 echo "5, 4, 3, 2, 1, Go !";
 echo "<br> The race started ! <br><br>";
-$Rallye_Car_Valentin->connection();
+// $Rallye_Car_Valentin->connection();
 
 ?>
 
 <form action="#" method="get">
     <fieldset>What do you want to do ?
     <input type='radio' name="action" value='start'> Start </input>
+    <br>
     <input type='radio' name="action" value='accelerate'>Accelerate </input>
+    <br>
     <input type='radio' name="action" value='brake'>Brake </input>
+    <br>
     <input type='radio' name="action" value='right'>Turn Right </input>
+    <br>
     <input type='radio' name="action" value='left'> Turn Left  </input>
+    <br>
     <input type='radio' name="action" value='stop'> Stop Car </input>
-    <input type='radio' name="action" value='print'> Print data car (+30sec) </input>
+    <br>
+    <input type='radio' name="action" value='print'> Print data car (Lose 30sec) </input>
+    <br>
     <input type='submit' name="validate" value='Go !'> validate </input>
-</fieldset>
+    <br>
+    </fieldset>
 </form> 
 
 <p> You selected <?= $_GET["action"] ?></p>
